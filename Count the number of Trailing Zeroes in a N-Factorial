@@ -1,0 +1,44 @@
+#include<iostream>
+using namespace std;
+int main() {
+    char chiphertext[99] = {};
+    char key[5] = { 'c', 'i', 't', 'y', 'u' };
+    char finKey[99] = {};
+    cout << "Input the ciphertext: " << endl;
+    cin >> chiphertext;
+    int i = 0;
+    int length = 0;
+    while (chiphertext[i] != '\0') {                                    //find the length of the chiphertext
+        length++;
+        i++;
+    }
+    int times;
+    int plustime;
+    int a = 0;
+    times = length / 5;                                                 //The number of complete key (cityu) need
+    plustime = length % 5;                                              //The number of extra character from the key (cityu) need
+    for (int i = 0; i < times; i++) {                                   //Get the final key my adding a specific number of complete key
+        for (int j = 0; j < 5; j++) {
+            finKey[j + a] = key[j];
+        }
+        a = a + 5;
+    }
+    for (int i = 0; i < plustime; i++) {                                //Put the character from the key (cityu) to the final key
+        finKey[i + a] = key[i];
+    }
+    cout << "The corresponding plaintext is: ";
+    for (int i = 0; i < length; i++) {                                  //cout the plaintext
+        int different = 0;
+        different = chiphertext[i] - finKey[i];
+        if (different > 0) {                                            //When the different between the chiphertext and finial key is larger than zero, cout the char of 96 + different
+            cout << char(96 + different);                               // When the different between the chiphertext and finial key is less than zero, need to find the character of 123 - (97 - (different + 96))
+        }
+        else {
+            cout << char(123 - (97 - (different + 96)));
+        }
+    }
+ 
+ 
+ 
+    return 0;
+}
